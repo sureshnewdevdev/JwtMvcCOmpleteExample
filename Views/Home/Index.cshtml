@@ -1,0 +1,29 @@
+@model AuthenticatedUserViewModel?
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="card">
+    <h2>Welcome</h2>
+    <p>This MVC dashboard is protected by JWT token authentication.</p>
+
+    @if (Model is not null)
+    {
+        <dl class="details-grid">
+            <dt>User name</dt>
+            <dd>@Model.Username</dd>
+            <dt>Display name</dt>
+            <dd>@Model.DisplayName</dd>
+            <dt>Role</dt>
+            <dd>@Model.Role</dd>
+            <dt>Token expires (UTC)</dt>
+            <dd>@Model.ExpiresUtc.ToString("u")</dd>
+        </dl>
+    }
+
+    <div class="role-links">
+        <a asp-action="AdminPage" class="button">Admin page</a>
+        <a asp-action="UserPage" class="button">User page</a>
+        <a asp-action="StaffPage" class="button">Staff page</a>
+    </div>
+</section>
