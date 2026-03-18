@@ -1,0 +1,33 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="card narrow">
+    <h2>Login Page</h2>
+    <p>Use one of the sample users below to receive a JWT token stored in an HttpOnly cookie.</p>
+
+    <ul>
+        <li><strong>Admin:</strong> admin / Admin@123</li>
+        <li><strong>User:</strong> user / User@123</li>
+        <li><strong>Staff:</strong> staff / Staff@123</li>
+    </ul>
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="alert">@Model.ErrorMessage</div>
+    }
+
+    <form asp-action="Login" method="post" class="form-grid">
+        @Html.AntiForgeryToken()
+        <label asp-for="Username"></label>
+        <input asp-for="Username" />
+        <span asp-validation-for="Username" class="validation"></span>
+
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" class="validation"></span>
+
+        <button type="submit" class="button">Login</button>
+    </form>
+</section>

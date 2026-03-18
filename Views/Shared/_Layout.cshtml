@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - JWT MVC Sample</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header class="site-header">
+        <div>
+            <h1>JWT Token Authentication MVC Sample</h1>
+            <p class="subtitle">Role based authorization for Admin, User, and Staff pages.</p>
+        </div>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <form asp-controller="Account" asp-action="Logout" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="button secondary">Logout</button>
+            </form>
+        }
+    </header>
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <nav class="site-nav">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Home" asp-action="AdminPage">Admin page</a>
+            }
+            @if (User.IsInRole("User"))
+            {
+                <a asp-controller="Home" asp-action="UserPage">User page</a>
+            }
+            @if (User.IsInRole("Staff"))
+            {
+                <a asp-controller="Home" asp-action="StaffPage">Staff page</a>
+            }
+        </nav>
+    }
+
+    <main class="container">
+        @RenderBody()
+    </main>
+</body>
+</html>
